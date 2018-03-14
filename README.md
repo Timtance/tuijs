@@ -1,10 +1,8 @@
 # tui
 TUI Javascript Library For UI (TUI前端框架)
 
+# *.tui document For TUI Factory
 
-=======================================================================
-===================   *.tui document For TUI Factory   ================
-=======================================================================
 <root>
     <scripts>
         <script>ui/js/T3.Monitor.js</script>
