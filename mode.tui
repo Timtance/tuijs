@@ -20,28 +20,31 @@
         <div class="eventpage" onclick="home.dispatchEvent()">pageEvent</div>
     </temp>
     <code>
-        tui.setCache("sessionId", "00004", "faceObj");
         var home = {
-            name: "wahah",
-            update: function(){
+            type:   Monitor.Event.workAdd, //组件状态
+            name: "wahah", //组件名称
+            update: function(){ //组件更新数据
                 home_titler.innerHTML += "_update_";
             },
-            default: function(){
-                home_titler.innerHTML = "H5_Default";
-            },
-            onPageEvent: function(e){
-                home.update();
-                alert("event:["+e.type+"] data:["+e.data+"]");
+            create: function(){ //组件初始化
+                tui.setCache("sessionId", "00004", "faceObj");
+                self.addEventListener(Monitor.Event.PageEvent+"home", home.onPageEvent);
             },
             dispatchEvent: function(event, param){//Look tui(1483)
-                alert(event + "i love u");
+                if(Monitor.Event.PageLeave === event){//离开页面
+                    this.clear();
+                }else if(Monitor.Event.PagePop === event){//进入页面
+                    this.param = param;
+                    if(param){
+                        tui.removeClass(IFtttCreate_Plane_Copy, "hide");
+                        home.type = Monitor.Event.workModify;
+                        homePost();
+                    }
+                    home_titler.innerHTML = "H5_Default";
+                }
             },
-            jumpEvent: function(param){
-                tui.dispatchEvent(Monitor.Event.PageJump, self, param);
-            }
+            clear: function(param){ }//组件清理
         };
-        //event Listen
-        self.addEventListener(Monitor.Event.PageEvent+"home", home.onPageEvent);
         home.create();
     </code>
 </root>
